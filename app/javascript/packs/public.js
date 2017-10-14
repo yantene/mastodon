@@ -1,5 +1,6 @@
 import loadPolyfills from '../mastodon/load_polyfills';
 import ready from '../mastodon/ready';
+var loadScript = require ('load-script');
 
 window.addEventListener('message', e => {
   const data = e.data || {};
@@ -123,6 +124,39 @@ function main() {
     if (noteCounter) {
       noteCounter.textContent = 160 - length(target.value);
     }
+  });
+
+  loadScript('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML,Safe', function () {
+    const options = {
+      tex2jax: {
+	    inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+      },
+      TeX: {
+        extensions: ["AMScd.js"]
+      },
+      skipStartupTypeset: true,
+      showProcessingMessages: false,
+      messageStyle: "none",
+      showMathMenu: true,
+      showMathMenuMSIE: true,
+      "SVG": {
+	    font:
+	    "TeX"
+	    // "STIX-Web"
+	    // "Asana-Math"
+	    // "Neo-Euler"
+	    // "Gyre-Pagella"
+	    // "Gyre-Termes"
+	    // "Latin-Modern"
+      },
+      "HTML-CSS": {
+	    availableFonts: ["TeX"],
+	    preferredFont: "TeX",
+	    webFont: "TeX"
+      }
+    };
+    MathJax.Hub.Config(options);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, ""]);
   });
 
   delegate(document, '#account_avatar', 'change', ({ target }) => {

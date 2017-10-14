@@ -1,5 +1,6 @@
 import React from 'react';
 import CharacterCounter from './character_counter';
+import LivePreview from './live_preview';
 import Button from '../../../components/button';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
@@ -205,6 +206,9 @@ export default class ComposeForm extends ImmutablePureComponent {
             <div className='character-counter__wrapper'><CharacterCounter max={500} text={text} /></div>
             <div className='compose-form__publish-button-wrapper'><Button text={publishText} onClick={this.handleSubmit} disabled={disabled || this.props.is_uploading || length(text) > 500 || (text.length !== 0 && text.trim().length === 0)} block /></div>
           </div>
+        </div>
+        <div className='compose-form__live-preview'>
+          <LivePreview text={text} />
         </div>
       </div>
     );
