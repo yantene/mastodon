@@ -49,6 +49,24 @@ export default class StatusContent extends React.PureComponent {
       link.setAttribute('rel', 'noopener');
     }
 
+    // code highlighting
+    node.innerHTML = node.innerHTML.replace(
+      /(?:<br>)?```(.*?)<br>(.*?)<br>```/g,
+      '</p><pre><code class="$1">$2</code></pre><p>'
+    );
+    for (let i = node.children.length - 1; i >= 0; i--) {
+      let child = node.children[i];
+      if (child.innerHTML == '') {
+        node.removeChild(child)
+      } else if (child.nodeName == 'PRE') {
+        let code = child.children[0];
+        if (code.getAttribute('class') == '') {
+          code.removeAttribute('class');
+        }
+        hljs.highlightBlock(child);
+      }
+    }
+
     while (typeof MathJax == 'undefined') console.log('queue'); // XXX
     MathJax.Hub.Queue(["Typeset", MathJax.Hub, node]);
   }

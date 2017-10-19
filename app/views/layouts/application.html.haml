@@ -8,6 +8,7 @@
     %link{ rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' }/
     %link{ rel: 'mask-icon', href: '/mask-icon.svg', color: '#2B90D9' }/
     %link{ rel: 'manifest', href: '/manifest.json' }/
+    %link{ rel: 'stylesheet', type: 'text/css', :href => "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css"}/
     %meta{ name: 'msapplication-config', content: '/browserconfig.xml' }/
     %meta{ name: 'theme-color', content: '#282c37' }/
     %meta{ name: 'apple-mobile-web-app-capable', content: 'yes' }/
@@ -19,6 +20,7 @@
           }
         });
     %script{ :src => "//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML" }
+    %script{ :src => "//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js" }
 
     %title<
       - if content_for?(:page_title)
