@@ -11,6 +11,23 @@
     %meta{ name: 'msapplication-config', content: '/browserconfig.xml' }/
     %meta{ name: 'theme-color', content: '#282c37' }/
     %meta{ name: 'apple-mobile-web-app-capable', content: 'yes' }/
+    %script{ :src => "//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML,Safe" }
+    :javascript
+      MathJax.Hub.Config({
+        tex2jax: { inlineMath: [ ['$','$'], ['\\(','\\)'] ] },
+        TeX: { extensions: ["AMScd.js"] },
+        skipStartupTypeset: true,
+        showProcessingMessages: false,
+        messageStyle: "none",
+        showMathMenu: true,
+        showMathMenuMSIE: true,
+        "SVG": { font: "TeX" },
+        "HTML-CSS": {
+          availableFonts: ["TeX"],
+          preferredFont: "TeX",
+          webFont: "TeX"
+        }
+      });
 
     %title<
       - if content_for?(:page_title)

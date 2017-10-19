@@ -5,7 +5,6 @@ import { isRtl } from '../rtl';
 import { FormattedMessage } from 'react-intl';
 import Permalink from './permalink';
 import classnames from 'classnames';
-const loadScriptOnce = require('load-script-once');
 
 export default class StatusContent extends React.PureComponent {
 
@@ -50,28 +49,7 @@ export default class StatusContent extends React.PureComponent {
       link.setAttribute('rel', 'noopener');
     }
 
-    loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML,Safe',
-      (err, script) => {
-        if (err) return;
-        const options = {
-          tex2jax: { inlineMath: [ ['$','$'], ['\\(','\\)'] ] },
-          TeX: { extensions: ["AMScd.js"] },
-          skipStartupTypeset: true,
-          showProcessingMessages: false,
-          messageStyle: "none",
-          showMathMenu: true,
-          showMathMenuMSIE: true,
-          "SVG": { font: "TeX" },
-          "HTML-CSS": {
-            availableFonts: ["TeX"],
-            preferredFont: "TeX",
-            webFont: "TeX"
-          }
-        };
-        MathJax.Hub.Config(options);
-        MathJax.Hub.Queue(["Typeset", MathJax.Hub, node]);
-      }
-    );
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, node]);
   }
 
   componentDidMount () {

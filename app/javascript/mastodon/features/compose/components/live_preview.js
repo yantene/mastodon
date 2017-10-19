@@ -18,7 +18,7 @@ class LivePreview extends React.PureComponent {
     this.setState({ textToRender: text });
     this.render();
     const node  = ReactDOM.findDOMNode(this);
-    if (typeof MathJax != 'undefined') { MathJax.Hub.Queue(["Typeset", MathJax.Hub, node]) }
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, node]);
   }, 375);
 
   componentWillUpdate() {
