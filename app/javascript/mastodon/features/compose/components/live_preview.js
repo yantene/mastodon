@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import emojify from '../../../features/emoji/emoji';
 import { debounce } from 'lodash';
-const loadScriptOnce = require('load-script-once');
 
 class LivePreview extends React.PureComponent {
   constructor (props, context) {
@@ -19,9 +18,7 @@ class LivePreview extends React.PureComponent {
     this.setState({ textToRender: text });
     this.render();
     const node  = ReactDOM.findDOMNode(this);
-    if (MathJax != undefined) {
-      MathJax.Hub.Queue(["Typeset", MathJax.Hub, node]);
-    }
+    if (typeof MathJax != 'undefined') { MathJax.Hub.Queue(["Typeset", MathJax.Hub, node]) }
   }, 375);
 
   componentWillUpdate() {
