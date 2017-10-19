@@ -49,6 +49,7 @@ export default class StatusContent extends React.PureComponent {
       link.setAttribute('rel', 'noopener');
     }
 
+    while (typeof MathJax == 'undefined') console.log('queue'); // XXX
     MathJax.Hub.Queue(["Typeset", MathJax.Hub, node]);
   }
 
