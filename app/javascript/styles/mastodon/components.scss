@@ -5,6 +5,12 @@
   overflow-y: hidden;
 }
 
+code.hljs {
+  font-size: 0.75em;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
 .app-body {
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;

@@ -14,7 +14,7 @@ function highlight(div) {
 function codeblockify(div) {
   // クオート部分を<pre><code>タグで括る
   div.innerHTML = div.innerHTML.replace(
-    /(?:<br>)?```(.*?)<br>(.*?)<br>```/g,
+    /(?:<br>)?```(.*?)<br>(.*?)<br>```(?:<br>)?/g,
     '</p><pre><code class="$1">$2</code></pre><p>'
   );
 
