@@ -1,19 +1,14 @@
 function mathjaxify(div) {
-
-  console.log('mathjaxify! begin');
   for (let desc of div.getElementsByTagName('p')) {
     if (desc.getAttribute('med')) continue;
     desc.setAttribute('med', true);
     MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
   }
-  console.log('mathjaxify! end');
 }
 function highlight(div) {
-  console.log('highlight! begin');
-  for (let desc of div.getElementsByTagName('pre')) {
+  for (let desc of div.getElementsByTagName('code')) {
     hljs.highlightBlock(desc);
   }
-  console.log('highlight! end');
 }
 
 function codeblockify(div) {
