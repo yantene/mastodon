@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import flare from '../../../features/flared/flared'
 import emojify from '../../../features/emoji/emoji';
 import { debounce } from 'lodash';
 
@@ -13,12 +14,12 @@ class LivePreview extends React.PureComponent {
   }
 
   changeTextToRender = debounce(() => {
-    const text = this.props.text.replace(/\n/g, '<br>');
+    const text = '<p>' + this.props.text.replace(/\n/g, '<br>') + '</p>';
 
     this.setState({ textToRender: text });
     this.render();
     const node  = ReactDOM.findDOMNode(this);
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, node]);
+    flare(node);
   }, 375);
 
   componentWillUpdate() {

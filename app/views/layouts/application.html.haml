@@ -12,13 +12,8 @@
     %meta{ name: 'msapplication-config', content: '/browserconfig.xml' }/
     %meta{ name: 'theme-color', content: '#282c37' }/
     %meta{ name: 'apple-mobile-web-app-capable', content: 'yes' }/
-    %script{type: 'text/x-mathjax-config' }
-      :plain
-        MathJax.Hub.Config({
-          tex2jax: {
-            inlineMath: [['$','$'],['\\(','\\)']]
-          }
-        });
+    %script{ type: 'text/x-mathjax-config' }
+      MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] } });
     %script{ src: '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML' }
     %script{ src: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js' }
     %script{ src: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/d.min.js' }
