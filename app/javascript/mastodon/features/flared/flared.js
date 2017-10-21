@@ -27,7 +27,7 @@ function texify(div) {
 }
 
 function highlight(div) {
-  for (let desc of div.getElementsByTagName('hljs')) {
+  for (let desc of div.getElementsByClassName('hljs')) {
     hljs.highlightBlock(desc);
   }
 }
