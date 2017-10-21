@@ -36,8 +36,8 @@ function codeblockify(div) {
     if (divchild.nodeName != 'P') continue;
     // クオート部分を<pre><code>タグで括る
     divchild.outerHTML = divchild.outerHTML.replace(
-      /(?:<br>)?```(.*?)<br>(.*?)<br>```(?:<br>)?/g,
-      '</p><pre><code class="$1 hljs">$2</code></pre><p>'
+      /(?:<br>)?(`{3,})(.*?)<br>(.*?)<br>\1(?:<br>)?/g,
+      '</p><pre><code class="$2 hljs">$3</code></pre><p>'
     ).replace(/<p>\s*<\/p>/g, '');
   }
 }
