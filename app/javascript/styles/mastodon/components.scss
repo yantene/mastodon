@@ -1,8 +1,14 @@
 @import 'variables';
 
-.MathJax_Display {
+span.equation {
+  margin: 0 0.2em;
+}
+
+div.equation {
   overflow-x: auto;
   overflow-y: hidden;
+  text-align: center;
+  margin: 0.5em 0;
 }
 
 code.hljs {

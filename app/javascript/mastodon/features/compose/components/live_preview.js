@@ -22,9 +22,6 @@ class LivePreview extends React.PureComponent {
     flare(node);
   }, 375);
 
-  componentWillUpdate() {
-  }
-
   componentDidUpdate() {
     this.changeTextToRender();
   }

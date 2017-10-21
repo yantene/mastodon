@@ -1,40 +1,45 @@
-function mathjaxify(div) {
-  for (let desc of div.getElementsByTagName('p')) {
-    if (desc.getAttribute('med')) continue;
-    desc.setAttribute('med', true);
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+function eneq(div) {
+  for (let desc of div.getElementsByClassName('equation')) {
+    if (desc.children.length == 0) {
+      katex.render(desc.textContent, desc);
+    }
   }
 }
+function texify(div) {
+  for (let divchild of div.children) {
+    if (divchild.nodeName != 'P') continue;
+    // クオート部分を<pre>タグで括る
+    divchild.outerHTML = divchild.outerHTML.replace(
+      /\$(.*?)\$/g,
+      '<span class="equation">$1</span>'
+    ).replace(
+      /(?:<br>)?\\\[<br>(.*?)<br>\\\](?:<br>)?/g,
+      '</p><div class="equation">$1</div><p>'
+    ).replace(/<p>\s*<\/p>/g, '');
+  }
+}
+
 function highlight(div) {
-  for (let desc of div.getElementsByTagName('code')) {
+  for (let desc of div.getElementsByTagName('hljs')) {
     hljs.highlightBlock(desc);
   }
 }
-
 function codeblockify(div) {
-  // クオート部分を<pre><code>タグで括る
-  div.innerHTML = div.innerHTML.replace(
-    /(?:<br>)?```(.*?)<br>(.*?)<br>```(?:<br>)?/g,
-    '</p><pre><code class="$1">$2</code></pre><p>'
-  );
-
-  for (let i = div.children.length - 1; i >= 0; i--) {
-    let child = div.children[i];
-    let gson = child.children[0];
-    if (child.nodeName == 'P' && child.innerHTML == '') {
-      // 発生した空のタグを取り除く
-      div.removeChild(child)
-    } else if (child.nodeName == 'PRE' && gson.getAttribute('class') == '') {
-      // 言語が指定されていなければ class 属性も要らない
-      gson.removeAttribute('class');
-    }
+  for (let divchild of div.children) {
+    if (divchild.nodeName != 'P') continue;
+    // クオート部分を<pre><code>タグで括る
+    divchild.outerHTML = divchild.outerHTML.replace(
+      /(?:<br>)?```(.*?)<br>(.*?)<br>```(?:<br>)?/g,
+      '</p><pre><code class="$1 hljs">$2</code></pre><p>'
+    ).replace(/<p>\s*<\/p>/g, '');
   }
 }
 
 export default function flare(node) {
-  window.setTimeout(() => {
+  //window.setTimeout(() => {
     codeblockify(node);
     highlight(node);
-    mathjaxify(node);
-  }, 0);
+    texify(node);
+    eneq(node);
+  //}, 0);
 }
