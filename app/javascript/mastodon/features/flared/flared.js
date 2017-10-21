@@ -1,6 +1,6 @@
 function eneq(div) {
   for (let desc of div.getElementsByClassName('equation')) {
-    if (desc.children.length == 0) {
+    if (desc.firstChild == null || desc.firstChild.className != 'katex') {
       let textContent = desc.textContent;
       try {
         katex.render(desc.textContent, desc);
