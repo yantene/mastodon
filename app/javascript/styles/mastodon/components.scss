@@ -11,6 +11,11 @@ div.equation {
   margin: 0.5em 0;
 }
 
+.invalid_equation {
+  color: red;
+  font-weight: bold;
+}
+
 code.hljs {
   font-size: 0.75em;
   line-height: 1.2;

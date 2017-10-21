@@ -1,10 +1,17 @@
 function eneq(div) {
   for (let desc of div.getElementsByClassName('equation')) {
     if (desc.children.length == 0) {
-      katex.render(desc.textContent, desc);
+      let textContent = desc.textContent;
+      try {
+        katex.render(desc.textContent, desc);
+      } catch (e) {
+        desc.textContent = textContent;
+        desc.classList.add('invalid_equation');
+      }
     }
   }
 }
+
 function texify(div) {
   for (let divchild of div.children) {
     if (divchild.nodeName != 'P') continue;
@@ -36,10 +43,8 @@ function codeblockify(div) {
 }
 
 export default function flare(node) {
-  //window.setTimeout(() => {
     codeblockify(node);
     highlight(node);
     texify(node);
     eneq(node);
-  //}, 0);
 }

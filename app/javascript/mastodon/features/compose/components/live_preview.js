@@ -30,7 +30,6 @@ class LivePreview extends React.PureComponent {
     const text = this.state.textToRender;
     return <div dangerouslySetInnerHTML={{ __html: emojify(text)}} />
   }
-
 }
 
 LivePreview.propTypes = {
