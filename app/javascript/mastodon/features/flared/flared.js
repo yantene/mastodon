@@ -17,9 +17,10 @@ function codeblockify(html) {
 }
 function format(html) {
   console.log(html);
-  html = html.replace(/<br \/>/g, '<br>');
+  html = html.replace(/<\/p>\s*<p>/g, '<br><br>').replace(/<br \/>/g, '<br>');
   html = eqblockify(html);
   html = codeblockify(html);
+  html = html.replace(/<p>\s*<br>/g, '<p>');
   console.log(html);
   return html;
 }
