@@ -5,7 +5,7 @@ import { isRtl } from '../rtl';
 import { FormattedMessage } from 'react-intl';
 import Permalink from './permalink';
 import classnames from 'classnames';
-import flare from '../features/flared/flared';
+import { format, decorate } from '../features/flared/flared';
 
 export default class StatusContent extends React.PureComponent {
 
@@ -50,8 +50,7 @@ export default class StatusContent extends React.PureComponent {
       link.setAttribute('rel', 'noopener');
     }
 
-    // highlight
-    flare(node);
+    decorate(node);
   }
 
   componentDidMount () {
@@ -121,8 +120,13 @@ export default class StatusContent extends React.PureComponent {
 
     const hidden = this.props.onExpandedToggle ? !this.props.expanded : this.state.hidden;
 
-    const content = { __html: status.get('contentHtml') };
-    const spoilerContent = { __html: status.get('spoilerHtml') };
+    const content = {
+      __html: format(status.get('contentHtml'))
+    };
+
+    const spoilerContent = {
+      __html: format(status.get('spoilerHtml'))
+    };
     const directionStyle = { direction: 'ltr' };
     const classNames = classnames('status__content', {
       'status__content--with-action': this.props.onClick && this.context.router,

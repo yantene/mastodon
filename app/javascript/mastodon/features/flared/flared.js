@@ -1,4 +1,30 @@
-function eneq(div) {
+function eqblockify(html) {
+  // クオート部分を<pre>タグで括る
+  return html.replace(
+    /\$(.*?)\$/g,
+    '<span class="equation">$1</span>'
+  ).replace(
+    /(?:<br>)?\\\[<br>(.*?)<br>\\\](?:<br>)?/g,
+    '</p><div class="equation">$1</div><p>'
+  ).replace(/<p>\s*<\/p>/g, '');
+}
+function codeblockify(html) {
+  // クオート部分を<pre><code>タグで括る
+  return html.replace(
+    /(?:<br>)?(`{3,})(.*?)<br>(.*?)<br>\1(?:<br>)?/g,
+    '</p><pre><code class="$2 hljs">$3</code></pre><p>'
+  ).replace(/<p>\s*<\/p>/g, '');
+}
+function format(html) {
+  console.log(html);
+  html = html.replace(/<br \/>/g, '<br>');
+  html = eqblockify(html);
+  html = codeblockify(html);
+  console.log(html);
+  return html;
+}
+
+function to_formula(div) {
   for (let desc of div.getElementsByClassName('equation')) {
     if (desc.firstChild == null || desc.firstChild.className != 'katex') {
       let textContent = desc.textContent;
@@ -11,40 +37,14 @@ function eneq(div) {
     }
   }
 }
-
-function texify(div) {
-  for (let divchild of div.children) {
-    if (divchild.nodeName != 'P') continue;
-    // クオート部分を<pre>タグで括る
-    divchild.outerHTML = divchild.outerHTML.replace(
-      /\$(.*?)\$/g,
-      '<span class="equation">$1</span>'
-    ).replace(
-      /(?:<br>)?\\\[<br>(.*?)<br>\\\](?:<br>)?/g,
-      '</p><div class="equation">$1</div><p>'
-    ).replace(/<p>\s*<\/p>/g, '');
-  }
-}
-
 function highlight(div) {
   for (let desc of div.getElementsByClassName('hljs')) {
     hljs.highlightBlock(desc);
   }
 }
-function codeblockify(div) {
-  for (let divchild of div.children) {
-    if (divchild.nodeName != 'P') continue;
-    // クオート部分を<pre><code>タグで括る
-    divchild.outerHTML = divchild.outerHTML.replace(
-      /(?:<br>)?(`{3,})(.*?)<br>(.*?)<br>\1(?:<br>)?/g,
-      '</p><pre><code class="$2 hljs">$3</code></pre><p>'
-    ).replace(/<p>\s*<\/p>/g, '');
-  }
+function decorate(node) {
+  highlight(node);
+  to_formula(node);
 }
 
-export default function flare(node) {
-    codeblockify(node);
-    highlight(node);
-    texify(node);
-    eneq(node);
-}
+export { format, decorate }
