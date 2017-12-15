@@ -637,6 +637,7 @@ code.hljs {
   font-weight: 400;
   overflow: hidden;
   white-space: pre-wrap;
+  padding-top: 2px;
 
   &:focus {
     outline: 0;
@@ -735,6 +736,10 @@ code.hljs {
 
     .status.status-direct {
       background: lighten($ui-base-color, 12%);
+
+      &.muted {
+        background: transparent;
+      }
     }
 
     .detailed-status,
@@ -889,7 +894,7 @@ code.hljs {
 .status__action-bar {
   align-items: center;
   display: flex;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .status__action-bar-button {
