@@ -1,0 +1,30 @@
+@import 'variables';
+
+span.equation {
+  margin: 0 0.2em;
+}
+
+div.equation {
+  overflow-x: auto;
+  overflow-y: hidden;
+  text-align: center;
+  margin: 0.5em 0;
+}
+
+.invalid_equation {
+  color: red;
+  font-weight: bold;
+}
+
+code.hljs {
+  font-size: 0.75em;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.compose-form__live-preview {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  background: $ui-base-color;
+}
