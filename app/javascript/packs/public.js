@@ -121,7 +121,7 @@ function main() {
     const noteCounter = document.querySelector('.note-counter');
 
     if (noteCounter) {
-      noteCounter.textContent = 160 - length(target.value);
+      noteCounter.textContent = 320 - length(target.value);
     }
   });
 
