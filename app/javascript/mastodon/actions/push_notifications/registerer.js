@@ -1,6 +1,7 @@
-import axios from 'axios';
+import api from '../../api';
 import { pushNotificationsSetting } from '../../settings';
 import { setBrowserSupport, setSubscription, clearSubscription } from './setter';
+import { me } from '../../initial_state';
 
 // Taken from https://www.npmjs.com/package/web-push
 const urlBase64ToUint8Array = (base64String) => {
@@ -35,7 +36,7 @@ const subscribe = (registration) =>
 const unsubscribe = ({ registration, subscription }) =>
   subscription ? subscription.unsubscribe().then(() => registration) : registration;
 
-const sendSubscriptionToBackend = (subscription, me) => {
+const sendSubscriptionToBackend = (getState, subscription) => {
   const params = { subscription };
 
   if (me) {
@@ -45,7 +46,7 @@ const sendSubscriptionToBackend = (subscription, me) => {
     }
   }
 
-  return axios.post('/api/web/push_subscriptions', params).then(response => response.data);
+  return api(getState).post('/api/web/push_subscriptions', params).then(response => response.data);
 };
 
 // Last one checks for payload support: https://web-push-book.gauntface.com/chapter-06/01-non-standards-browsers/#no-payload
@@ -54,7 +55,6 @@ const supportsPushNotifications = ('serviceWorker' in navigator && 'PushManager'
 export function register () {
   return (dispatch, getState) => {
     dispatch(setBrowserSupport(supportsPushNotifications));
-    const me = getState().getIn(['meta', 'me']);
 
     if (me && !pushNotificationsSetting.get(me)) {
       const alerts = getState().getIn(['push_notifications', 'alerts']);
@@ -85,13 +85,13 @@ export function register () {
             } else {
               // Something went wrong, try to subscribe again
               return unsubscribe({ registration, subscription }).then(subscribe).then(
-                subscription => sendSubscriptionToBackend(subscription, me));
+                subscription => sendSubscriptionToBackend(getState, subscription));
             }
           }
 
           // No subscription, try to subscribe
           return subscribe(registration).then(
-            subscription => sendSubscriptionToBackend(subscription, me));
+            subscription => sendSubscriptionToBackend(getState, subscription));
         })
         .then(subscription => {
           // If we got a PushSubscription (and not a subscription object from the backend)
@@ -137,10 +137,9 @@ export function saveSettings() {
     const alerts = state.get('alerts');
     const data = { alerts };
 
-    axios.put(`/api/web/push_subscriptions/${subscription.get('id')}`, {
+    api(getState).put(`/api/web/push_subscriptions/${subscription.get('id')}`, {
       data,
     }).then(() => {
-      const me = getState().getIn(['meta', 'me']);
       if (me) {
         pushNotificationsSetting.set(me, data);
       }
