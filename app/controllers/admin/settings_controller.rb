@@ -6,6 +6,7 @@ module Admin
       site_contact_username
       site_contact_email
       site_title
+      site_short_description
       site_description
       site_extended_description
       site_terms
@@ -15,6 +16,7 @@ module Admin
       timeline_preview
       show_staff_badge
       bootstrap_timeline_accounts
+      theme
       thumbnail
       hero
       min_invite_role
