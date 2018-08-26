@@ -33,7 +33,7 @@ module Mastodon
     end
 
     def repository
-      'tootsuite/mastodon'
+      'fla-red/mastodon'
     end
 
     def source_base_url
