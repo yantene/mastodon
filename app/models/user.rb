@@ -98,7 +98,7 @@ class User < ApplicationRecord
            :reduce_motion, :system_font_ui, :noindex, :theme, :display_sensitive_media, :hide_network,
            :default_language, to: :settings, prefix: :setting, allow_nil: false
 
-  attr_accessor :invite_code
+  attr_reader :invite_code
 
   def pam_conflict(_)
     # block pam login tries on traditional account
@@ -224,6 +224,10 @@ class User < ApplicationRecord
     settings.notification_emails['digest']
   end
 
+  def allows_report_emails?
+    settings.notification_emails['report']
+  end
+
   def hides_network?
     @hides_network ||= settings.hide_network
   end
@@ -258,7 +262,7 @@ class User < ApplicationRecord
   end
 
   def invite_code=(code)
-    self.invite  = Invite.find_by(code: code) unless code.blank?
+    self.invite  = Invite.find_by(code: code) if code.present?
     @invite_code = code
   end
 
