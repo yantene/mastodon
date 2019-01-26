@@ -16,8 +16,8 @@ const notificationForScreenReader = (intl, message, timestamp) => {
   return output.join(', ');
 };
 
-@injectIntl
-export default class Notification extends ImmutablePureComponent {
+export default @injectIntl
+class Notification extends ImmutablePureComponent {
 
   static contextTypes = {
     router: PropTypes.object,
@@ -86,7 +86,9 @@ export default class Notification extends ImmutablePureComponent {
               <i className='fa fa-fw fa-user-plus' />
             </div>
 
-            <FormattedMessage id='notification.follow' defaultMessage='{name} followed you' values={{ name: link }} />
+            <span title={notification.get('created_at')}>
+              <FormattedMessage id='notification.follow' defaultMessage='{name} followed you' values={{ name: link }} />
+            </span>
           </div>
 
           <AccountContainer id={account.get('id')} withNote={false} hidden={this.props.hidden} />
@@ -118,7 +120,10 @@ export default class Notification extends ImmutablePureComponent {
             <div className='notification__favourite-icon-wrapper'>
               <i className='fa fa-fw fa-star star-icon' />
             </div>
-            <FormattedMessage id='notification.favourite' defaultMessage='{name} favourited your status' values={{ name: link }} />
+
+            <span title={notification.get('created_at')}>
+              <FormattedMessage id='notification.favourite' defaultMessage='{name} favourited your status' values={{ name: link }} />
+            </span>
           </div>
 
           <StatusContainer id={notification.get('status')} account={notification.get('account')} muted withDismiss hidden={!!this.props.hidden} />
@@ -137,7 +142,10 @@ export default class Notification extends ImmutablePureComponent {
             <div className='notification__favourite-icon-wrapper'>
               <i className='fa fa-fw fa-retweet' />
             </div>
-            <FormattedMessage id='notification.reblog' defaultMessage='{name} boosted your status' values={{ name: link }} />
+
+            <span title={notification.get('created_at')}>
+              <FormattedMessage id='notification.reblog' defaultMessage='{name} boosted your status' values={{ name: link }} />
+            </span>
           </div>
 
           <StatusContainer id={notification.get('status')} account={notification.get('account')} muted withDismiss hidden={this.props.hidden} />
